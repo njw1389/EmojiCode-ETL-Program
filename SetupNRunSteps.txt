@@ -1,0 +1,168 @@
+So you said ANY programming language and even mentioned DEC 11/780, so I decided 
+to take on the challenge with BrainF**k. I wanted to, but realized it would be 
+nearly impossible to do so. Instead, I chose Emojicode, an esoteric language just 
+like BrainF**k but a lot more practical while still being just crazy enough to 
+pique my interest and put your assignment wording to the test. However, I quickly 
+ran into an issue as I jumped into the project before thoroughly reading the 
+documentation. I instantly discovered that Emojicode doesn't support file I/O and 
+wouldn't be able to read files unless the JSON data was converted to an Emojicode 
+source file. Additionally, it can't create files directly. To overcome these 
+limitations, I decided to combine C and Emojicode in a creative solution. I 
+developed two C scripts: an Input script and an Output script. The Input script 
+reads the JSON data and creates a 'data.emojic' file, which essentially just prints 
+out each value to the console. Then, in the Output C file, I use the system() 
+function to run the Emojicode script natively with the Emojicode compiler, capture 
+the response, and create the required CSV file to complete the assignment. I know 
+this was extreme overkill, but it was a lot of fun, And I taught myself a small part of 
+C, as I had never used it before, along with Emojicode. 
+
+EmojiCode Script Breakdown:
+🏁 🍇
+  😀 🔤Keeley Bosco🔤❗️
+  😀 🔤1228-1221-1221-1431🔤❗️
+  😀 🔤Rubye Jerde🔤❗️
+  😀 🔤1228-1221-1221-1431🔤❗️
+  ...
+  10,000 More Lines
+  ...
+  😀 🔤Luciano Gutmann🔤❗️
+  😀 🔤1234-2121-1221-1211🔤❗️
+  😀 🔤Austin Langworth🔤❗️
+  😀 🔤1212-1221-1121-1234🔤❗️
+🍉
+Key:
+🏁 - This emoji represents the start of the main program.
+🍇 - This emoji opens a new block of code.
+😀 - This emoji represents the "print" function in Emojicode.
+🔤...🔤 - These quotation emojis enclose a string literal.
+❗️ - This emoji is used to call a method or function.
+🍉 - This emoji closes a block of code.
+
+
+
+Setup Steps:
+
+## 1. Install WSL with Ubuntu on Windows 11
+1. Open PowerShell as Administrator
+2. Run the following command:
+
+   wsl --install
+
+3. This command will enable the necessary features, install WSL, and install 
+Ubuntu as the default distribution(I only used Windows 11. I'm pretty sure older 
+versions of Windows required you to go to the Microsoft Store and download Ubuntu, 
+then proceed from there).
+4. Restart your computer when prompted
+5. After restart, Search for Ubuntu in Start and click on it
+6. Create a username and password for your Ubuntu system when prompted
+
+
+
+## 2. Set Up the Project
+1. Unzip the provided file (Exercise1A-EmojiCode.zip) to your Windows Desktop
+2. Open Ubuntu from the Start menu OR type 'wsl' in PowerShell as Admin
+3. Navigate to the project directory:
+
+   cd /mnt/c/Users/{YourWindowsUsername}/Desktop/Exercise1A-EmojiCode
+
+   Replace '{YourWindowsUsername}' with your actual Windows username
+
+4. Verify that you can see the project files:
+
+   ls
+
+   You should see files like CInput.c, COutput.c, emojicode_generator.h, etc.
+
+
+
+## 3. Install Required Packages
+1. Update package lists:
+
+   sudo apt update
+
+2. Install required packages:
+
+   sudo apt install build-essential pkg-config libjansson-dev -y
+
+
+
+## 4. Install Emojicode
+1. Download the latest Emojicode release:
+
+   wget https://github.com/emojicode/emojicode/releases/download/v1.0-beta.2/Emojicode-1.0-beta.2-Linux-x86_64.tar.gz
+
+2. Extract the archive:
+
+   tar -xzf Emojicode-1.0-beta.2-Linux-x86_64.tar.gz
+
+3. Move to the Emojicode directory:
+
+   cd Emojicode-1.0-beta.2-Linux-x86_64
+
+4. Install Emojicode:
+
+   sudo ./install.sh
+
+5. Return to the project directory:
+
+   cd /mnt/c/Users/{YourWindowsUsername}/Desktop/Exercise1A-EmojiCode
+
+6. Test your Emojicode installation by running the hello world program. Compile it and run it by:
+First, compile the program:
+   
+   emojicodec HelloWorld.emojic
+   
+Then, run the compiled program:
+   
+   ./HelloWorld
+
+NOTE: When I followed these steps I got the following error at this step and I did the following to fix it:
+Error Message:
+emojicodec: error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
+
+Fix:
+
+sudo apt update
+
+Then:
+
+sudo apt install libtinfo5
+
+
+
+## 5. Run the Program
+1. Compile the C Program:
+
+gcc -c CInput.c -o CInput.o $(pkg-config --cflags --libs jansson)
+gcc -c COutput.c -o COutput.o
+gcc CInput.o COutput.o -o cprogram $(pkg-config --libs jansson)
+
+2. Run the C program:
+
+   ./cprogram
+
+   This will generate the `data.emojic` file and compile it automatically.
+
+3. Check the output:
+
+   cat 20######.csv
+
+4. (Optional) If you want to see the generated Emojicode, you can view it with:
+
+   cat data.emojic
+
+
+
+## Troubleshooting
+- Emojicode doesn't have ARM architecture support, so you must be running on a x86_64 system.
+- For any other issues, please refer to the error messages.
+Note: If you can't run it, you can watch the video I attached that shows me compiling it and then running it, and the output. Because I had to use my desktop 
+for this, as my ARM Mac wouldn't work, I made this because I can't meet you at your office hours or before/after class to run it for you since I won't be able to bring in my PC.
+Note: I tested these setup steps by uninstalling WSL and following them to a tee.
+
+
+
+## Contact
+If your having any problems you can reach me at:
+Email: njw1389@rit.edu
+Phone Number: (609)-975-4099 (You may need to call me twice. I don't usually answer unknown numbers, but I'll keep my eyes open for any calls after submitting the assignment.)
